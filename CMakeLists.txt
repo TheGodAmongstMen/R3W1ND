@@ -13,6 +13,7 @@ pico_sdk_init()
 add_executable(r3w1nd
     main.c
     screen.c
+    uart.c
 )
 
 target_include_directories(r3w1nd PRIVATE

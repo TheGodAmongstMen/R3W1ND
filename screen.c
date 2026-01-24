@@ -10,18 +10,6 @@
 #include "hardware/gpio.h"
 #include "pico/stdlib.h"
 
-// pins n ports
-#define SPI_PORT spi0
-
-#define PIN_SCK  18
-#define PIN_MOSI 19
-#define PIN_CS   17
-#define PIN_DC   16
-#define PIN_RST  20
-
-#define LCD_WIDTH  240
-#define LCD_HEIGHT 280
-
 static inline void lcd_cmd(uint8_t cmd) {
     gpio_put(PIN_DC, 0);
     gpio_put(PIN_CS, 0);
@@ -132,3 +120,21 @@ void screen_draw_pixel(uint16_t x, uint16_t y, uint16_t color){
     gpio_put(PIN_CS, 1);
 }
 
+void screen_draw_image(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t *img) {
+    if (x + y > LCD_WIDTH || y+ h > LCD_HEIGHT) return;
+
+    screen_set_window(x, y, x + w - 1, y + h - 1);
+
+    gpio_put(PIN_DC, 1);
+    gpio_put(PIN_CS, 0);
+
+    for(uint32_t i = 0; i < w*h; i++) {
+        uint8_t px[2]= {
+            img[i] >> 8,
+            img[i] & 0xFF
+        };
+        spi_write_blocking(SPI_PORT, px, 2);
+    }
+
+    gpio_put(PIN_CS, 1);
+}

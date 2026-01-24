@@ -1,21 +1,17 @@
 #include "pico/stdlib.h"
 #include "screen.h"
+#include "uart.h"
 
 int main() {
     stdio_init_all();
     screen_init();
+    dfplayer_uart_init();
 
-    while (1) {
-        screen_fill(0xF800); // red
-        sleep_ms(500);
-        screen_fill(0x07E0); // green
-        sleep_ms(500);
-        screen_fill(0x001F); // blue
-        sleep_ms(500);
-        screen_fill(0x0000);           // black
-        //screen_draw_pixel(10, 10, 0xFFFF); // white pixel
-        //screen_draw_pixel(20, 20, 0xF800); // red
-        //screen_draw_pixel(30, 30, 0x07E0); // green
-        //screen_draw_pixel(40, 40, 0x001F); // blue
-    }
+    screen_fill(0xF800); 
+    sleep_ms(1500);           // DFPlayer needs time
+    dfplayer_send(0x06, 25);  // volume
+    dfplayer_send(0x0A, 0);   // normal EQ
+    dfplayer_send(0x09, 0);   // select TF card
+    dfplayer_send(0x03, 1);   // play
+
 }
