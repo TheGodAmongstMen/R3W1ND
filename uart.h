@@ -3,7 +3,6 @@
 
 #include "hardware/uart.h"
 
-// === DFPlayer UART config ===
 #define DF_UART uart1
 #define DF_BAUD 9600
 

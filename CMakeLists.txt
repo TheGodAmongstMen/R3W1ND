@@ -14,6 +14,7 @@ add_executable(r3w1nd
     main.c
     screen.c
     uart.c
+    mainscreen.c
 )
 
 target_include_directories(r3w1nd PRIVATE

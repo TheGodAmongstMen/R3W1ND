@@ -9,6 +9,8 @@
 #include "screen.h"
 #include "hardware/gpio.h"
 #include "pico/stdlib.h"
+#include "mainscreen.h"
+
 
 static inline void lcd_cmd(uint8_t cmd) {
     gpio_put(PIN_DC, 0);
@@ -57,6 +59,8 @@ void screen_init(void){
     lcd_data(&madctl, 1);
 
     lcd_cmd(0x29); // DISPON
+
+    screen_fill(0x0000);
 }
 
 void screen_fill(uint16_t color){
@@ -137,4 +141,25 @@ void screen_draw_image(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uin
     }
 
     gpio_put(PIN_CS, 1);
+}
+
+
+void draw_mainscreen_frame(int dst_x, int dst_y, int frame) {
+    const uint8_t *src =
+        mainscreen_data + frame * BYTES_PER_TILE;
+
+    int idx = 0;
+
+    for (int y = 0; y < TILE_H; y++) {
+        for (int x = 0; x < TILE_W; x += 2) {
+            uint8_t b = src[idx++];
+
+            uint8_t p0 = b >> 4;
+            uint8_t p1 = b & 0x0F;
+
+            
+            screen_draw_pixel(dst_x + x, dst_y + y, mainscreen_palette[p0]);
+            screen_draw_pixel(dst_x + x + 1, dst_y + y, mainscreen_palette[p1]);
+        }
+    }
 }
