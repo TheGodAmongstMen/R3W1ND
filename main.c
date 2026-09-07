@@ -1,25 +1,28 @@
-#include "pico/stdlib.h"
+#include "mainscreen.h"
 #include "screen.h"
 #include "uart.h"
-#include "mainscreen.h"
+#include "pico/stdlib.h"
+#include "hardware/gpio.h"
 
-#define PIN_BACK 10
-#define PIN_PAUSE 11
-#define PIN_NEXT 12
-#define PIN_MODE 13
-
-int main() {
-    stdio_init_all();
+int main(void){
     screen_init();
-    dfplayer_uart_init();
-    screen_fill(0x0000); 
-    
     int frame = 0;
+    int boot = 0;
+    
+    uint16_t red = 0xF800;
+    screen_fill(0xFFFF);
+    sleep_ms(500);
 
-    while (1) {
-        
-        draw_mainscreen_frame(2, 30, frame);
-        frame = (frame + 1) % MAINSCREEN_FRAMES;
-        sleep_ms(50); // 20 FPS
+    while (boot < 20)
+    {
+        draw_mainscreen_frame(04, 32, frame);
+
+        frame++;
+        if (frame >= MAINSCREEN_FRAMES)
+            frame = 0;
+
+        sleep_ms(50);  // 20 FPS 
+        boot++;
     }
+
 }

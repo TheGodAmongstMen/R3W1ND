@@ -14,7 +14,7 @@
 #define PIN_RST  20
 
 #define LCD_WIDTH  240
-#define LCD_HEIGHT 300
+#define LCD_HEIGHT 320
 
 
 static inline void lcd_cmd(uint8_t cmd);

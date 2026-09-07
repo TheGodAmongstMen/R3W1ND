@@ -1,0 +1,6 @@
+/home/magnet/R3W1ND/build/_deps/picotool/picotool
+/home/magnet/R3W1ND/build/_deps/picotool/picotoolTargets.cmake
+/home/magnet/R3W1ND/build/_deps/picotool/picotoolTargets-release.cmake
+/home/magnet/R3W1ND/build/_deps/picotool/picotoolConfig.cmake
+/home/magnet/R3W1ND/build/_deps/picotool/picotoolConfigVersion.cmake
+/home/magnet/R3W1ND/build/_deps/picotool/enc_bootloader.elf

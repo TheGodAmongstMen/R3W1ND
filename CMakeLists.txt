@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Pull in the Pico SDK
 include(pico_sdk_import.cmake)
 
 project(r3w1nd C CXX ASM)
@@ -9,6 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Initialize the Pico SDK
 pico_sdk_init()
+
 
 add_executable(r3w1nd
     main.c
